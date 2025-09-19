@@ -34,6 +34,13 @@ Day-by-day development logs:
 - Decision points and rationale
 - Testing protocols and results
 
+### `/v2.1.0-cleanup-archive/`
+Documentation cleanup archive (September 2025):
+- Files removed during codebase sprawl reduction
+- Historical investigations and completed plans
+- Testing documentation and CI setup guides
+- Preserved context from the transition to unified architecture
+
 ## Key Lessons (TL;DR)
 
 The main insights are captured in the production repo's [LESSONS_LEARNED.md](https://github.com/yourusername/omnifocus-mcp/blob/main/docs/LESSONS_LEARNED.md).
