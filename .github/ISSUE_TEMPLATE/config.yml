@@ -1,8 +1,0 @@
-blank_issues_enabled: false
-contact_links:
-  - name: Documentation
-    url: https://github.com/kip-d/omnifocus-mcp/tree/main/docs
-    about: Read the documentation before opening an issue
-  - name: Discussions
-    url: https://github.com/kip-d/omnifocus-mcp/discussions
-    about: Ask questions and discuss ideas with the community
