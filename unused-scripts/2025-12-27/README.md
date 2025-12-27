@@ -1,40 +1,39 @@
 # Unused Scripts - Archived 2025-12-27
 
-These scripts were removed from omnifocus-mcp v3.0.0 because they are not imported by any tools.
+## Status Update
 
-## Context
+Initial audit identified 13 "unused" scripts, but re-analysis found that **11 of them are actively used**
+via barrel file imports (tasks.ts, reviews.ts, recurring.ts).
 
-With the v3.0.0 unified API consolidation, many backend scripts became orphaned as tools were
-consolidated into the 4 unified MCP tools (omnifocus_read, omnifocus_write, omnifocus_analyze, system).
+**Actually removed from omnifocus-mcp:** 2 scripts
+**Archived but still in use:** 11 scripts (kept in archive for historical reference)
 
-Some scripts were superseded by newer implementations:
-- `list-tasks-ast.ts` - Replaced by AST-based query system in contracts/
-- `warm-projects-cache-with-stats.ts` - Replaced by `warm-projects-cache.ts`
-- Various task scripts - Functionality consolidated into ManageTaskTool
-
-Some scripts were never connected to the MCP interface:
-- Review scripts (`mark-project-reviewed.ts`, `projects-for-review.ts`, `set-review-schedule.ts`)
-- These contain valid OmniJS code but were never routed through a tool
-
-## Scripts Archived
+## Scripts Actually Removed
 
 | Script | Category | Notes |
 |--------|----------|-------|
-| `tasks/delete-task.ts` | Tasks | Superseded by ManageTaskTool |
-| `tasks/list-tasks-ast.ts` | Tasks | Replaced by AST query system |
-| `tasks/complete-task.ts` | Tasks | Superseded by ManageTaskTool |
-| `tasks/delete-tasks-bulk.ts` | Tasks | Bulk delete via batch operations |
-| `tasks/todays-agenda.ts` | Tasks | Today mode in QueryTasksTool |
-| `tasks/complete-tasks-bulk.ts` | Tasks | Bulk complete via batch operations |
-| `cache/warm-projects-cache-with-stats.ts` | Cache | Superseded by simpler version |
-| `projects/update-project.ts` | Projects | Via ManageTaskTool with target:project |
-| `system/get-version.ts` | System | Moved to utils/version.ts |
-| `recurring/get-recurring-patterns.ts` | Recurring | Never routed to tool |
-| `reviews/mark-project-reviewed.ts` | Reviews | Never routed to tool |
-| `reviews/projects-for-review.ts` | Reviews | Never routed to tool |
-| `reviews/set-review-schedule.ts` | Reviews | Never routed to tool |
+| `cache/warm-projects-cache-with-stats.ts` | Cache | Superseded by `warm-projects-cache.ts` |
+| `projects/update-project.ts` | Projects | Never connected to any tool |
 
-## Potential Future Use
+## Scripts Archived But Still In Use
 
-The review scripts could be valuable if review management is added to the MCP server.
-The OmniJS code is functional and could be connected to a new ReviewTool.
+These scripts were initially thought unused but are imported through barrel files:
+
+| Script | Used By |
+|--------|---------|
+| `tasks/complete-task.ts` | ManageTaskTool via tasks.ts |
+| `tasks/complete-tasks-bulk.ts` | ManageTaskTool via tasks.ts |
+| `tasks/delete-task.ts` | ManageTaskTool via tasks.ts |
+| `tasks/delete-tasks-bulk.ts` | ManageTaskTool via tasks.ts |
+| `tasks/todays-agenda.ts` | QueryTasksTool via tasks.ts |
+| `tasks/list-tasks-ast.ts` | QueryTasksTool, ManageTaskTool via tasks.ts |
+| `system/get-version.ts` | version-detection.ts |
+| `recurring/get-recurring-patterns.ts` | RecurringTasksTool via recurring.ts |
+| `reviews/mark-project-reviewed.ts` | ManageReviewsTool via reviews.ts |
+| `reviews/projects-for-review.ts` | ManageReviewsTool via reviews.ts |
+| `reviews/set-review-schedule.ts` | ManageReviewsTool via reviews.ts |
+
+## Lesson Learned
+
+When auditing for unused code, must trace through barrel file re-exports, not just direct imports.
+The pattern `grep -r "from.*scriptname" src/tools` misses indirect imports via barrel files.
